@@ -1,7 +1,6 @@
 ## Task 1 Output
 
-![Image/task1.jpg)
-
+![Output 1](output/task1.jpg)
 
 ## Task 2 Output
 
