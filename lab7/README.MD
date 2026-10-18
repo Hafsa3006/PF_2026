@@ -1,5 +1,6 @@
 ## Task 1 Output
 
+![Image/task1.jpg)
 
 
 ## Task 2 Output
