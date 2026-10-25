@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 int deposit(float *balance, float amount) {
