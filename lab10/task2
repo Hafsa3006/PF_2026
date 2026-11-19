@@ -1,1 +1,124 @@
+#include <stdio.h>
 
+struct Movie {
+    char title[80];
+    char genre[50];
+    char director[80];
+    int releaseYear;
+    float rating;
+};
+
+int sameText(char a[], char b[]) {
+    int i = 0;
+    while (a[i] != '\0' && b[i] != '\0') {
+        char c1 = a[i];
+        char c2 = b[i];
+
+        if (c1 >= 'A' && c1 <= 'Z') {
+            c1 = c1 + 32;
+        }
+        if (c2 >= 'A' && c2 <= 'Z') {
+            c2 = c2 + 32;
+        }
+
+        if (c1 != c2) {
+            return 0;
+        }
+        i++;
+    }
+
+    if (a[i] == '\0' && b[i] == '\0') {
+        return 1;
+    }
+    return 0;
+}
+
+void showOneMovie(struct Movie m) {
+    printf("Title: %s | Genre: %s | Director: %s | Year: %d | Rating: %.1f\n",
+           m.title, m.genre, m.director, m.releaseYear, m.rating);
+}
+
+void addMovie(struct Movie movies[], int *count) {
+    if (*count >= 50) {
+        printf("Movie list is full.\n");
+        return;
+    }
+
+    printf("Enter title: ");
+    scanf(" %[^\n]", movies[*count].title);
+
+    printf("Enter genre: ");
+    scanf(" %[^\n]", movies[*count].genre);
+
+    printf("Enter director: ");
+    scanf(" %[^\n]", movies[*count].director);
+
+    printf("Enter release year: ");
+    scanf("%d", &movies[*count].releaseYear);
+
+    printf("Enter rating (0-10): ");
+    scanf("%f", &movies[*count].rating);
+
+    *count = *count + 1;
+    printf("Movie added!\n");
+}
+
+void searchGenre(struct Movie movies[], int count, char genre[]) {
+    int found = 0;
+    printf("\n--- Movies in '%s' ---\n", genre);
+
+    for (int i = 0; i < count; i++) {
+        if (sameText(movies[i].genre, genre) == 1) {
+            showOneMovie(movies[i]);
+            found = 1;
+        }
+    }
+
+    if (found == 0) {
+        printf("No movies found for this genre.\n");
+    }
+}
+
+void showAllMovies(struct Movie movies[], int count) {
+    printf("\n--- All Movies ---\n");
+    for (int i = 0; i < count; i++) {
+        showOneMovie(movies[i]);
+    }
+}
+
+int main(void) {
+    struct Movie movies[50] = {
+        {"Inception", "Sci-Fi", "Christopher Nolan", 2010, 8.8f},
+        {"Interstellar", "Sci-Fi", "Christopher Nolan", 2014, 8.7f},
+        {"The Dark Knight", "Action", "Christopher Nolan", 2008, 9.0f}
+    };
+
+    int count = 3;
+    int choice = 0;
+    char search[50];
+
+    while (1) {
+        printf("\n1. Add movie\n");
+        printf("2. Search by genre\n");
+        printf("3. Show all movies\n");
+        printf("4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            addMovie(movies, &count);
+        } else if (choice == 2) {
+            printf("Enter genre: ");
+            scanf(" %[^\n]", search);
+            searchGenre(movies, count, search);
+        } else if (choice == 3) {
+            showAllMovies(movies, count);
+        } else if (choice == 4) {
+            break;
+        } else {
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}
